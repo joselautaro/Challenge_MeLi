@@ -2,7 +2,9 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
 
+#===========================================================================================#
 
+#autenticamos credenciales para no tener que volver a loguearse
 
 directorio_de_credenciales = 'credentials_module.json'
 
@@ -29,24 +31,37 @@ def crear_archivo_texto(nombre_archivo, contenido, id_folder):
     archivo.SetContentString(contenido)
     archivo.Upload()
     
+#===============================================================================================#
+    
 #visualizar la hora del archivo
-import datetime
 
 def busca(query):
     resultado = []
     credenciales = login()
     lista_archivos = credenciales.ListFile({'q': query}).GetList()
-    for f in lista_archivos:
+    for lista in lista_archivos:
         # Fecha de ultima modificacion
-        print('Fecha de ultima modificacion:',f['modifiedDate'])
+        print('Fecha de ultima modificacion:',lista['modifiedDate'])
         # Version
-        print('Version:',f['version'])
-        # print('visibilidad:',f['visibility'])
+        print('Version:',lista['version'])
         #extension
-        print('Tipo de archivo:',f['mimeType'])
-        resultado.append(f)
+        print('Tipo de archivo:',lista['mimeType'])
+        resultado.append(lista)
     
     return resultado
+
+#================================================#
+
+#Utilizamos metodo de creacion
 if __name__ == "__main__":
     # crear_archivo_texto('Hola drive.txt', 'hola', '1Qn2162gOJsyTL4tOpa2KtVZFLPcKJZf9')
     busca("title =  'Hola drive'")
+
+#===================================================#
+
+    
+
+    
+    
+    
+
