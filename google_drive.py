@@ -1,3 +1,4 @@
+from itertools import permutations
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
@@ -36,19 +37,19 @@ def crear_archivo_texto(nombre_archivo, contenido, id_folder):
 #visualizar la hora del archivo
 
 def busca(query):
-    resultado = []
+    result = []
     credenciales = login()
-    lista_archivos = credenciales.ListFile({'q': query}).GetList()
-    for lista in lista_archivos:
+    list_file = credenciales.ListFile({'q': query}).GetList()
+    for list in list_file:
         # Fecha de ultima modificacion
-        print('Fecha de ultima modificacion:',lista['modifiedDate'])
+        print('Fecha de ultima modificacion:',list['modifiedDate'])
         # Version
-        print('Version:',lista['version'])
+        print('Version:',list['version'])
         #extension
-        print('Tipo de archivo:',lista['mimeType'])
-        resultado.append(lista)
+        print('Tipo de archivo:',list['mimeType'])
+        result.append(list)
     
-    return resultado
+    return result
 
 #================================================#
 
@@ -59,9 +60,27 @@ if __name__ == "__main__":
 
 #===================================================#
 
-    
+#Eliminar permisos, exceptos el del owner
 
-    
+#Declaro en variable el mail del owner
+owner_email = 'desarrolladorjoselautaro@gmail.com'
+#declaro en variable el id del archivo al que deseo acceder
+file_id = '16d87oWGKbIax4JkHdRgZTkM6mlxwssEX'
+#Traigo las credenciales
+credenciales = login()
+
+#Declaro en una variable las credenciales y con la funcion Createfile designo que estamos hablando de este id para que autentifique
+file = credenciales.CreateFile({'id': file_id})
+#Traigo y declaro en una variable los permisos que tiene este archivo
+permutations_list = file.GetPermissions()
+#Recorro con un bucle citando la lista de permisos
+for obj in permutations_list:
+    #Si el objeto email es distinto a el mail del propietario
+    if obj.get('emailAddress') != owner_email:
+        #elimino el permiso de otros usuarios
+        file.DeletePermission(obj['id'])
+        
+#=============================================================#
     
     
 
