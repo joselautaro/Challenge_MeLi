@@ -1,6 +1,9 @@
+from email import message
 from itertools import permutations
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
+import smtplib 
+from email.message import EmailMessage
 
 
 #===========================================================================================#
@@ -55,7 +58,9 @@ def busca(query):
 
 #Utilizamos metodo de creacion
 if __name__ == "__main__":
+    #Se crea un nuevo archivo
     # crear_archivo_texto('Hola drive.txt', 'hola', '1Qn2162gOJsyTL4tOpa2KtVZFLPcKJZf9')
+    #Busca en bucle, los archivos que tengan como titulo 'Hola drive'
     busca("title =  'Hola drive'")
 
 #===================================================#
@@ -81,6 +86,42 @@ for obj in permutations_list:
         file.DeletePermission(obj['id'])
         
 #=============================================================#
-    
-    
 
+#Enviamos mail al owner, notificando el cambio  de visibilidad
+#En una variable, declaro la funcion Email
+message = EmailMessage()
+
+#Declaramos en una variable el asunto del mail
+email_subject = "Hola, te hablamos desde python"
+sender_email_address = "joselautarom@gmail.com"
+receiver_email_addres = "desarrolladorjoselautaro@gmail.com"
+
+message['Subject'] = email_subject
+message['From'] = sender_email_address
+message['To'] = receiver_email_addres
+
+message.set_content("Tu mail de este archivo ha sido eliminado y pasa a ser privado")
+
+email_smtp = "smtp.gmail.com"  
+server = smtplib.SMTP(email_smtp, '587')
+email_smtp = "smtp.gmail.com" 
+
+# Set smtp server and port 
+server = smtplib.SMTP(email_smtp, '587') 
+
+# Identify this client to the SMTP server 
+server.ehlo() 
+
+# Secure the SMTP connection 
+server.starttls()
+sender_email_address = "joselautarom@gmail.com" 
+email_password = "Lautaro110210"
+
+# Login to email account 
+server.login(sender_email_address, email_password)
+
+# Send email 
+server.send_message(message) 
+
+# Close connection to server 
+server.quit()
