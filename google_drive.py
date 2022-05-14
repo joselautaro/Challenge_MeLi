@@ -93,8 +93,8 @@ message = EmailMessage()
 
 #Declaramos en una variable el asunto del mail
 email_subject = "Hola, te hablamos desde python"
-sender_email_address = "joselautarom@gmail.com"
-receiver_email_addres = "desarrolladorjoselautaro@gmail.com"
+sender_email_address = "desarrolladorjoselautaro@gmail.com"
+receiver_email_addres = "joselautarom@gmail.com"
 
 message['Subject'] = email_subject
 message['From'] = sender_email_address
@@ -114,8 +114,8 @@ server.ehlo()
 
 # Secure the SMTP connection 
 server.starttls()
-sender_email_address = "joselautarom@gmail.com" 
-email_password = "Lautaro110210"
+sender_email_address = "desarrolladorjoselautaro@gmail.com" 
+email_password = "casrkylrxlnwyuup"
 
 # Login to email account 
 server.login(sender_email_address, email_password)
@@ -125,3 +125,4 @@ server.send_message(message)
 
 # Close connection to server 
 server.quit()
+print("Email, enviado exitosamente!")
