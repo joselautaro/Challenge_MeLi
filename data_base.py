@@ -1,6 +1,6 @@
 import mysql.connector
 import os
-
+#Se establace conexion a la base de datos
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -8,12 +8,10 @@ conn = mysql.connector.connect(
     port="3306",
     database="mydrive"
 )
-
-
 cursor = conn.cursor()
-
+#Se crea tabla archivos
 sql = """CREATE TABLE archivos (id INT AUTO_INCREMENT PRIMARY KEY, nombres VARCHAR(255), extension VARCHAR(255), owner VARCHAR(255), visibilidad VARCHAR(255), ultimamodificacion VARCHAR(255))"""
-
+#Se insertan datos en la tabla archivos mediante una 
 sql = """INSERT INTO archivos (id, nombres, extension, owner, visibilidad, ultimamodificacion) VALUES(%s, %s, %s, %s, %s, %s)"""
 
 valores = [
@@ -24,7 +22,6 @@ valores = [
     ("", "Unidad 4 -", ".docs", "José Lautaro Desarrollador", "privado", "8/3/2022"),
     ("", "Capitulo 2 IVU", ".docs", "José Lautaro Desarrollador", "privado", "5/3/2022"),
 ]
-
 cursor.executemany(sql, valores)
 
 conn.commit()
