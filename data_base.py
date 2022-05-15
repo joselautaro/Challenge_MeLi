@@ -1,4 +1,5 @@
 import mysql.connector
+import os
 
 conn = mysql.connector.connect(
     host="localhost",
@@ -7,7 +8,10 @@ conn = mysql.connector.connect(
     port="3306",
     database="mydrive"
 )
+
+
 cursor = conn.cursor()
+
 sql = """CREATE TABLE archivos (id INT AUTO_INCREMENT PRIMARY KEY, nombres VARCHAR(255), extension VARCHAR(255), owner VARCHAR(255), visibilidad VARCHAR(255), ultimamodificacion VARCHAR(255))"""
 
 sql = """INSERT INTO archivos (id, nombres, extension, owner, visibilidad, ultimamodificacion) VALUES(%s, %s, %s, %s, %s, %s)"""
@@ -22,8 +26,8 @@ valores = [
 ]
 
 cursor.executemany(sql, valores)
+
 conn.commit()
 for bd in cursor:
     print(bd)
-
 conn.close()
