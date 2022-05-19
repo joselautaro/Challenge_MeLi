@@ -36,10 +36,11 @@ def eliminar_archivo():
     #Imprimimos un mensaje que confirma el proceso exitoso
     print('ID: ', ingresar_id_a_eliminar, 'eliminado exitosamente, chequear en la base de datos por favor!')
     
-    # n=cursor.rowcount
+    #Se commitea los cambios y se los sube a la base de datos
     conn.commit()
     
     #Se cierra la conexion a la base de datos   
     cursor.close()
     
+#Se llama la funcion eliminar_archivo para su correcta ejecución    
 eliminar_archivo()
