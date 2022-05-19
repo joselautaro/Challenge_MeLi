@@ -1,5 +1,15 @@
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "¡Bienvenidos/as a mi app challenge de python!"
+
 import mysql.connector
 import os
+
+app.run(host="0.0.0.0")
 #Se establace conexion a la base de datos
 conn = mysql.connector.connect(
     host="localhost",
@@ -12,7 +22,7 @@ cursor = conn.cursor()
 
 def crear_base_de_datos():
     #Se crea tabla archivos
-    sql = """CREATE TABLE archivos (id INT AUTO_INCREMENT PRIMARY KEY, nombres VARCHAR(255), extension VARCHAR(255), owner VARCHAR(255), visibilidad VARCHAR(255), ultimamodificacion VARCHAR(255))"""
+    sql = """CREATE TABLE archivos (id INT AUTO_INCREMENT, nombres VARCHAR(255), extension VARCHAR(255), owner VARCHAR(255), visibilidad VARCHAR(255), ultimamodificacion VARCHAR(255))"""
     #Se insertan datos en la tabla archivos mediante una lista de tuplas
     sql = """INSERT INTO archivos (id, nombres, extension, owner, visibilidad, ultimamodificacion) VALUES(%s, %s, %s, %s, %s, %s)"""
 
