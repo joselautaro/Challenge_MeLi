@@ -7,15 +7,16 @@ from email.message import EmailMessage
 #===========================================================================================#
 # Iniciar sesión
 
-credentials_directory = 'credentials_module.json'
+#Establecemos una variable en donde llamamos a las credenciales
+directorio_de_credenciales = 'credentials_module.json'
 
-
+#Establecemos una funcion, donde las credenciales se refrescan en caso de que expiren
 def login():
     gauth = GoogleAuth()
-    gauth.LoadCredentialsFile(credentials_directory)
+    gauth.LoadCredentialsFile(directorio_de_credenciales)
     if gauth.access_token_expired:
         gauth.Refresh()
-        gauth.SaveCredentialsFile(credentials_directory)
+        gauth.SaveCredentialsFile(directorio_de_credenciales)
     else:
         gauth.Authorize()
 
@@ -27,38 +28,46 @@ print(login)
 #===============================================================================================#
 # visualizar la hora del archivo
 
-
-def search(query):
-    result = []
+#Establecemos una funcion donde 
+def buscar(query):
+    resultado = []
     credenciales = login()
-    list_file = credenciales.ListFile({'q': query}).GetList()
-    for list in list_file:
+    lista_de_archivo = credenciales.ListFile({'q': query}).GetList()
+    for list in lista_de_archivo:
         print('Fecha de ultima modificacion:', list['modifiedDate'])
         print('Version:', list['version'])
         print('Tipo de archivo:', list['mimeType'])
-        result.append(list)
+        resultado.append(list)
 
-    return result
+    return resultado
 
 
 #================================================#
 # Utilizamos metodo de creacion
 if __name__ == "__main__":
-    search("title =  'Hola drive'")
+    #Ejecutando la funcion buscar
+    buscar("title =  'Hola drive'")
 
 #===================================================#
 # Eliminar permisos, exceptos el del owner
 
-
+#establecemos una variable con el mail del owner
 owner_email = 'desarrolladorjoselautaro@gmail.com'
 
+#Establecemos una variable con identrificador unico del archivo
 file_id = '16d87oWGKbIax4JkHdRgZTkM6mlxwssEX'
 
+#Iniciamos con las credenciales que estan en la función login
 credenciales = login()
 
+#establecemos una variable file a la que le pasamos las credenciales necesarias y el metodo Createfile con la variable que tiene el identificador
 file = credenciales.CreateFile({'id': file_id})
-permutations_list = file.GetPermissions()
-for obj in permutations_list:
+
+#Se establece una variable para definir la lista de permisos llamando al metodo Get
+lista_de_permisos = file.GetPermissions()
+
+#Se recorre con un bucle for la lista de permisos y en el caso de que el id de los permisos sea diferente al del owner, se elimina el permiso y se convierte el archivo privado
+for obj in lista_de_permisos:
     if obj.get('emailAddress') != owner_email:
         file.DeletePermission(obj['id'])
 

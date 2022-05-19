@@ -1,7 +1,7 @@
 client_config_backend: settings
 client_config:
-  client_id: 938868123924-o55aql4vii5to463oafp8os2l4oafkru.apps.googleusercontent.com
-  client_secret: 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
+  client_id: 1057452086139-l826rkv8n8nsmubvt9t8ha7fnjd4ogms.apps.googleusercontent.com
+  client_secret: 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
 
 save_credentials: True
 save_credentials_backend: file
