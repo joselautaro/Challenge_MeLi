@@ -1,5 +1,5 @@
 <h1 align="center">Challenge MeLi - IAM Cyber Security </h1>
-<h2 align="center">¡Hola, un gusto saludarte!👋 mi nombre es Lautaro</h2>
+<h2 align="center">¡Hola, un gusto saludarte! Mi nombre es Lautaro</h2>
 <h3 align="center">Soy estudiante de la Tecnicatura Universitaria en Ciberseguridad & Profesor de Desarrollo Web en Coder House</h3>
 <hr>
 
