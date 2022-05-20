@@ -78,18 +78,26 @@ print("El archivo pasa a ser privado y se le enviará un mail al owner, notifica
 # Enviamos mail al owner, notificando el cambio  de visibilidad
 message = EmailMessage()
 
-
+#Establecemos el asunto del mail
 email_subject = "Hola, te hablamos desde App-Python🙌"
+
+#Establecemos el correo del cual se enviará el mail
 sender_email_address = "joselautarom@gmail.com"
+
+#Establecemos el correo que recepcionará el mail
 receiver_email_addres = "desarrolladorjoselautaro@gmail.com"
 
+
+#Establecemos carcateristicas de las variables declaradas arriba
 message['Subject'] = email_subject
 message['From'] = sender_email_address
 message['To'] = receiver_email_addres
 
+#Agremos el contenido del mail
 message.set_content(
     "El usuario con el que compartes este archivo fue eliminado y pasa a estado privado!")
 
+#Conectamos con el servidor
 email_smtp = "smtp.gmail.com"
 server = smtplib.SMTP(email_smtp, '587')
 email_smtp = "smtp.gmail.com"
@@ -100,14 +108,17 @@ server.ehlo()
 
 server.starttls()
 
+#Logueamos el mail y contraseña usada para este usuario
 sender_email_address = "joselautarom@gmail.com"
-
 email_password = "jpasztgvtzldwknb"
 
+#Logueamos el envio y recepcion del mail
 server.login(sender_email_address, email_password)
 
 server.send_message(message)
 
+#Cerramos la conexion con el servidor del mail
 server.quit()
 
+#Imprimimos mensaje para el usuario
 print("Envío exitoso, por favor consulte con el owner!")
