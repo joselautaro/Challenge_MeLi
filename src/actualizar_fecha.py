@@ -32,7 +32,7 @@ def actualizar_fecha_de_base_de_datos():
     #asignamos una variable para especificar la fecha nueva del id invocado
     ingresar_fecha_final = input("Ingresar nueva fecha: ")
     
-    #Genero el script SQL en este caso para actualizar datos en nuestra base de datos
+    #Genero el script SQL en este caso para actualizar datos de ultima modificación en nuestra base de datos
     sql = '''UPDATE archivos SET ultimamodificacion = "{}" WHERE  id = "{}" '''.format(ingresar_fecha_final, ingresar_id_a_modificar)
     
     #Ejecutamos el script pasandolo como parametro 
@@ -41,7 +41,7 @@ def actualizar_fecha_de_base_de_datos():
     #Imprimimos un mensaje que confirma el proceso exitoso
     print('Cambio de fecha exitosa a: ', ingresar_fecha_final, 'Chequear en la base de datos por favor!')
     
-    # n=cursor.rowcount
+    #Subimos los cammbios a la base de datos
     conn.commit()
     
     #Se cierra la conexion a la base de datos   
