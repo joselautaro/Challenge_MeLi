@@ -22,9 +22,6 @@ def login():
 
     return GoogleDrive(gauth)
 
-
-print(login)
-
 #===============================================================================================#
 # visualizar la hora del archivo
 
@@ -52,49 +49,49 @@ if __name__ == "__main__":
 # Eliminar permisos, exceptos el del owner
 
 #establecemos una variable con el mail del owner
-owner_email = 'desarrolladorjoselautaro@gmail.com'
+email_propietario = 'desarrolladorjoselautaro@gmail.com'
 
 #Establecemos una variable con identrificador unico del archivo
-file_id = '16d87oWGKbIax4JkHdRgZTkM6mlxwssEX'
+identificador_de_archivo = '16d87oWGKbIax4JkHdRgZTkM6mlxwssEX'
 
 #Iniciamos con las credenciales que estan en la función login
 credenciales = login()
 
 #establecemos una variable file a la que le pasamos las credenciales necesarias y el metodo Createfile con la variable que tiene el identificador
-file = credenciales.CreateFile({'id': file_id})
+archivo = credenciales.CreateFile({'id': identificador_de_archivo})
 
 #Se establece una variable para definir la lista de permisos llamando al metodo Get
-lista_de_permisos = file.GetPermissions()
+lista_de_permisos = archivo.GetPermissions()
 
 #Se recorre con un bucle for la lista de permisos y en el caso de que el id de los permisos sea diferente al del owner, se elimina el permiso y se convierte el archivo privado
 for obj in lista_de_permisos:
-    if obj.get('emailAddress') != owner_email:
-        file.DeletePermission(obj['id'])
+    if obj.get('emailAddress') != email_propietario:
+        archivo.DeletePermission(obj['id'])
 
 print("El archivo pasa a ser privado y se le enviará un mail al owner, notificando dicho cambio.")
 
 #=============================================================#
 
 # Enviamos mail al owner, notificando el cambio  de visibilidad
-message = EmailMessage()
+mensaje = EmailMessage()
 
 #Establecemos el asunto del mail
-email_subject = "Hola, te hablamos desde App-Python🙌"
+asunto_del_mail = "Hola, te hablamos desde App-Python🙌"
 
 #Establecemos el correo del cual se enviará el mail
-sender_email_address = "joselautarom@gmail.com"
+correo_mail_saliente = "joselautarom@gmail.com"
 
 #Establecemos el correo que recepcionará el mail
-receiver_email_addres = "desarrolladorjoselautaro@gmail.com"
+correo_mail_entrante = "desarrolladorjoselautaro@gmail.com"
 
 
 #Establecemos carcateristicas de las variables declaradas arriba
-message['Subject'] = email_subject
-message['From'] = sender_email_address
-message['To'] = receiver_email_addres
+mensaje['Subject'] = asunto_del_mail
+mensaje['From'] = correo_mail_saliente
+mensaje['To'] = correo_mail_entrante
 
 #Agremos el contenido del mail
-message.set_content(
+mensaje.set_content(
     "El usuario con el que compartes este archivo fue eliminado y pasa a estado privado!")
 
 #Conectamos con el servidor
@@ -109,13 +106,13 @@ server.ehlo()
 server.starttls()
 
 #Logueamos el mail y contraseña usada para este usuario
-sender_email_address = "joselautarom@gmail.com"
-email_password = "jpasztgvtzldwknb"
+correo_mail_saliente = "joselautarom@gmail.com"
+password_email = "jpasztgvtzldwknb"
 
 #Logueamos el envio y recepcion del mail
-server.login(sender_email_address, email_password)
+server.login(correo_mail_saliente, password_email)
 
-server.send_message(message)
+server.send_message(mensaje)
 
 #Cerramos la conexion con el servidor del mail
 server.quit()
